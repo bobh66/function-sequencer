@@ -55,7 +55,16 @@ See `example/composition-regex.yaml` for a complete example.
 
 ## Installation
 
-It can be installed as follows from the Upbound marketplace: https://marketplace.upbound.io/functions/crossplane-contrib/function-sequencer
+The function can be installed into a Crossplane cluster using the following manifest:
+
+```yaml
+apiVersion: pkg.crossplane.io/v1
+kind: Function
+metadata:
+  name: function-sequencer
+spec:
+  package: xpkg.crossplane.io/crossplane-contrib/function-sequencer:v0.3.0
+```
 
 ## Developing this function
 
