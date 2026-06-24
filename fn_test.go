@@ -2578,7 +2578,7 @@ func TestRunFunction(t *testing.T) {
 
 	for name, tc := range cases {
 		t.Run(name, func(t *testing.T) {
-			f := &Function{log: logging.NewNopLogger()}
+			f := &Function{log: logging.NewNopLogger(), ttl: response.DefaultTTL}
 			rsp, err := f.RunFunction(tc.args.ctx, tc.args.req)
 
 			if diff := cmp.Diff(tc.want.rsp, rsp, protocmp.Transform()); diff != "" {
@@ -2659,7 +2659,7 @@ func TestRunFunctionCacheTTL(t *testing.T) {
 
 	for name, tc := range cases {
 		t.Run(name, func(t *testing.T) {
-			f := &Function{log: logging.NewNopLogger()}
+			f := &Function{log: logging.NewNopLogger(), ttl: response.DefaultTTL}
 			req := &v1.RunFunctionRequest{
 				Input: resource.MustStructObject(tc.input),
 				Observed: &v1.State{
@@ -2710,7 +2710,7 @@ func TestRunFunctionConditionErrors(t *testing.T) {
 
 	for name, tc := range cases {
 		t.Run(name, func(t *testing.T) {
-			f := &Function{log: logging.NewNopLogger()}
+			f := &Function{log: logging.NewNopLogger(), ttl: response.DefaultTTL}
 			req := &v1.RunFunctionRequest{
 				Input: resource.MustStructObject(&v1beta1.Input{
 					Rules: []v1beta1.SequencingRule{

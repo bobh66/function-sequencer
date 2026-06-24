@@ -32,6 +32,7 @@ type Function struct {
 	v1.UnimplementedFunctionRunnerServiceServer
 
 	log logging.Logger
+	ttl time.Duration
 }
 
 // getCELEnv lazily initializes the shared CEL environment on first use.
@@ -101,7 +102,7 @@ const (
 func (f *Function) RunFunction(_ context.Context, req *v1.RunFunctionRequest) (*v1.RunFunctionResponse, error) { //nolint:gocognit // This function is unavoidably complex.
 	f.log.Debug("Running function", "tag", req.GetMeta().GetTag())
 
-	rsp := response.To(req, response.DefaultTTL)
+	rsp := response.To(req, f.ttl)
 
 	in := &v1beta1.Input{}
 	if err := request.GetInput(req, in); err != nil {
